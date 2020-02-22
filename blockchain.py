@@ -41,7 +41,7 @@ class Blockchain:
         block_index = 1
         while block_index < len(chain):
             block = chain[block_index]
-            if block['previous_block'] != self.hash(previous_block):
+            if block['previous_hash'] != self.hash(previous_block):
                 return False
             previous_proof = previous_block['proof']
             proof = block['proof']
@@ -83,6 +83,15 @@ def get_chain():
     response = {
         'chain': blockchain.chain,
         'length': len(blockchain.chain)
+    }
+    return jsonify(response), 200
+
+
+@app.route('/is_valid', methods=['GET'])
+def is_valid():
+    validity = blockchain.is_chain_valid(blockchain.chain)
+    response = {
+        'is_valid': validity
     }
     return jsonify(response), 200
 
