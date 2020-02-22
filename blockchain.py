@@ -70,11 +70,12 @@ def mine_block():
     response = {
         "message": "Congratulations, you just mined a block",
         "index": block["index"],
-        "timestamp": block["time"],
+        "timestamp": block["timestamp"],
         "nonce": block["proof"],
         "previous_hash": block["previous_hash"]
     }
     return jsonify(response), 200
+
 
 # Get the entire blockchain
 @app.route('/get_chain', methods=['GET'])
@@ -84,3 +85,6 @@ def get_chain():
         'length': len(blockchain.chain)
     }
     return jsonify(response), 200
+
+
+app.run(host='0.0.0.0', port=5000)
